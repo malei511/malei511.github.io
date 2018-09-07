@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="./lib/jquery-3.1.1/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
+    <script src="./lib/bootstrap/js/bootstrap.js"></script>
+    <script src="./js/myFunction.js"></script>
+
+
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #wrap {
+            position: fixed;
+            width: 100%;
+            top: 0px;
+        }
+
+        #printFrame {
+            transition: all 2s;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            overflow-y: scroll;
+            z-index: 5;
+        }
+
+        body {
+            /*background-color: ;*/
+            transition: all 1s;
+            /*width: 100%;*/
+        }
+
+        .bar {
+            height: 90px;
+            line-height: 90px;
+            text-align: center;
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        .row {
+            /*position: fixed;*/
+        }
+
+        .selfintr {
+            width: 100%;
+            background-color: #888;
+        }
+
+        .skill {
+            background-color: #999;
+        }
+
+        .program {
+            background-color: #aaa;
+        }
+
+        .contact {
+            background-color: #bbb;
+
+        }
+
+        #wall {
+            height: 90px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="printFrame"></div>
+<div id="wrap" class="container-fluid">
+
+    <div class="row" hidden>
+        <div class="col-md-2 bar"></div>
+        <div class="col-md-2 bar"></div>
+        <div class="col-md-2 bar daohang">自我介绍</div>
+        <div class="col-md-2 bar daohang">技能掌握</div>
+        <div class="col-md-2 bar daohang">优秀项目</div>
+        <div class="col-md-2 bar daohang">联系方式</div>
+    </div>
+</div>
+<div id="wall" hidden></div>
+<div id="main">
+    <div class="selfintr page" hidden>
+
+    </div>
+    <div class="skill page" hidden>
+
+    </div>
+    <div class="program page" hidden>
+
+    </div>
+    <div class="contact page" hidden>
+
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        var str1 = "我只是一只小小的java菜鸟,不求高大上的特效,只望能够契合java程序员的风格";
+        //每次输出的间隔
+        var interval = 50;
+        //执行所需要的时间
+        var time1 = str1.length * interval;
+        var pf = document.getElementById("printFrame");
+        var bar = document.getElementsByClassName(".row")[0];
+        var wrap = document.getElementById("wrap");
+        $(".daohang").hover(function () {
+            $(this).css({
+                cursor: "pointer",
+                opacity: "0.6"
+            })
+        }, function () {
+            $(this).css({
+                cursor: "none",
+                opacity: "1"
+            })
+        })
+        $(".daohang").on("click", function () {
+            if ($(this).index() >= 2) {
+                console.log(($(this).index() - 2) * (document.documentElement.clientHeight - 100));
+                console.log($(".row").outerHeight());
+                scrollTo(0,($(this).index() - 2) * (document.documentElement.clientHeight - 100));
+            }
+
+        })
+        $(".page").css({
+            height: document.documentElement.clientHeight - 100 + "px"
+        });
+        typewrite(str1, interval, "#printFrame");
+        setTimeout(function () {
+
+            $("#printFrame").css({
+                backgroundColor: "black",
+                color: "white",
+                width: "500px",
+                height: "400px",
+                left: "700px",
+                top: "100px",
+                boxShadow: "10px 10px 3px #333",
+                border: "1px white solid"
+            })
+            var rightPX = document.body.offsetWidth - pf.offsetWidth;
+            setTimeout(function () {
+                var str2 = "恩,黑底白字的效果看着舒服多了";
+                var time2 = str2.length * interval;
+                typewrite(str2, interval, "#printFrame");
+                setTimeout(function () {
+                    var str3 = "唔,背景太白,字体太小,略伤眼,调整一下";
+
+                    var time3 = str3.length * interval;
+                    typewrite(str3, interval, "#printFrame");
+                    setTimeout(function () {
+                        $("body").eq(0).css("background-color", "#555");
+                        $("#printFrame").css("font-size", "20px");
+                        $("#printFrame").css("padding", "20px");
+                        var str4 = "好了, 进入正题..自我介绍?"
+                        var time4 = str4.length * interval;
+                        setTimeout(function () {
+                            typewrite(str4, interval, "#printFrame");
+                            setTimeout(function () {
+
+                                $("#printFrame").css({
+                                    left: rightPX + "px",
+                                    top: "200px"
+                                })
+                                $(".selfintr").slideDown(1000);
+                                setTimeout(function () {
+                                    var str5 = "没耐心等我啰嗦了么,那我就加快速度吧"
+                                    var time5 = str4.length * interval;
+                                    typewrite(str5, interval, "#printFrame");
+                                    setTimeout(function () {
+                                        $(".page").show(500);
+                                        $(".row").show(500);
+                                        $("#wall").show(500);
+                                        $("#printFrame").css("position", "fixed");
+                                    }, time5 + 500)
+                                }, 2500)
+                            }, time4 + 1000)
+                        }, 2000)
+                    }, time3 + 500)
+                }, time2 + 500);
+            }, 2000)
+        }, time1);
+
+    })
+
+</script>
+
+</body>
+</html>
